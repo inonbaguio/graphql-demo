@@ -10,12 +10,11 @@ import axios from 'axios';
 const BASE_URL = 'http://people-friends.app';
 
 function getPersonByUrl(relativeUrl) {
-    console.log(relativeUrl);
     const url = `${BASE_URL}${relativeUrl}`;
+
     return axios.get(url).then(res => {
         return res.data.person;
     });
-
 }
 
 const PersonType = new GraphQLObjectType({
