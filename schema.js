@@ -10,8 +10,9 @@ import axios from 'axios';
 const BASE_URL = 'http://people-friends.app';
 
 function getPersonByUrl(relativeUrl) {
+    console.log(relativeUrl);
     const url = `${BASE_URL}${relativeUrl}`;
-
+    console.log(url);
     return axios.get(url).then(res => {
         return res.data.person;
     });
@@ -35,7 +36,7 @@ const PersonType = new GraphQLObjectType({
         id : { type : GraphQLString },
         friends : {
             type : new GraphQLList(PersonType),
-            resolve : (person, args) => person.friends
+            resolve : (person) => person.friends.map((val, index) => getPersonByUrl(`/people/${val.id}`))
         }
     })
 });
