@@ -12,7 +12,6 @@ const BASE_URL = 'http://people-friends.app';
 function getPersonByUrl(relativeUrl) {
     console.log(relativeUrl);
     const url = `${BASE_URL}${relativeUrl}`;
-    console.log(url);
     return axios.get(url).then(res => {
         return res.data.person;
     });
@@ -20,7 +19,7 @@ function getPersonByUrl(relativeUrl) {
 }
 
 const PersonType = new GraphQLObjectType({
-    name : 'Person2',
+    name : 'Person',
     description : '...',
     fields : () => ({
         firstName : {
@@ -36,7 +35,7 @@ const PersonType = new GraphQLObjectType({
         id : { type : GraphQLString },
         friends : {
             type : new GraphQLList(PersonType),
-            resolve : (person) => person.friends.map((val, index) => getPersonByUrl(`/people/${val.id}`))
+            resolve : (person) => person.friends.map((val, index) => getPersonByUrl(val))
         }
     })
 });
