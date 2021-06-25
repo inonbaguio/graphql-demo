@@ -7,11 +7,10 @@ import {
 
 import axios from 'axios';
 
-const BASE_URL = 'http://people-friends.app';
+const BASE_URL = 'http://laravel8.test/api';
 
-function getPersonByUrl(relativeUrl) {
+const getPersonByUrl = relativeUrl =>  {
     const url = `${BASE_URL}${relativeUrl}`;
-
     return axios.get(url).then(res => {
         return res.data.person;
     });
@@ -21,6 +20,7 @@ const PersonType = new GraphQLObjectType({
     name : 'Person',
     description : '...',
     fields : () => ({
+        id : { type : GraphQLString },
         firstName : {
             type : GraphQLString,
             resolve : (person) => person.first_name
@@ -31,14 +31,12 @@ const PersonType = new GraphQLObjectType({
         },
         email : {type : GraphQLString},
         username : {type : GraphQLString},
-        id : { type : GraphQLString },
         friends : {
-            type : new GraphQLList(PersonType),
-            resolve : (person) => person.friends.map((val, index) => getPersonByUrl(val))
-        }
+            type: new GraphQLList(PersonType),
+            resolve: (person) => person.friends.map((val, index) => getPersonByUrl(val))
+        },
     })
 });
-
 
 const QueryType = new GraphQLObjectType({
     name : 'Query',
