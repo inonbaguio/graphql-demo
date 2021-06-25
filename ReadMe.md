@@ -1,4 +1,4 @@
-VroomVroomVroom TechTalk Presentation
+GraphQL TechTalk Presentation
 
 Resources:
 
